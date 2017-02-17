@@ -33,7 +33,9 @@ function initMap() {
     map: map
   });
 }
-initMap();
+$(function() {
+  initMap();
+});
 
 /*
 var Model = function() {};
