@@ -1,76 +1,65 @@
 var map;
+var markers = [];
+var locations = [
+  {title: "Eon Coffee", category: "dining", position: {lat: 37.645400, lng: -122.104821}},
+  {title: "California State University, East Bay", category: "education", position: {lat: 37.656238, lng: -122.055397}},
+  {title: "Southland Mall", category: "shopping", position: {lat: 37.652083, lng: -122.101450}},
+  {title: "Buffalo Bill's Brewery", category: "dining", position: {lat: 37.673968, lng: -122.081629}},
+  {title: "Chabot College", category: "education", position: {lat: 37.642477, lng: -122.106537}},
+  {title: "Fairfield Inn & Suites", category: "lodging", position: {lat: 37.633226, lng: -122.112062}},
+  {title: "Hayward Shoreline Interpretive Center", category: "leisure", position: {lat: 37.623327, lng: -122.137156}},
+  {title: "Century at Hayward", category: "leisure", position: {lat: 37.673543, lng: -122.080705}}
+];
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 37.645400, lng: -122.104821},
     zoom: 14
   });
-  var eon = new google.maps.Marker({
-    position: {lat: 37.645400, lng: -122.104821},
-    map: map,
-    title: "Eon Coffee"
-  });
-  var infowindow = new google.maps.InfoWindow({
-    content: "Display info about location."
-  });
-  /* This click listener not working as expected, on click infowindow should open and
-  marker should animate, infowindow is opening, but must click twice for marker to
-  animate. */
-  eon.addListener("click", function() {
-    infowindow.open(map, eon);
-    if (eon.getAnimation() !== null) {
-      eon.setAnimation(null);
-    } else {
-      eon.setAnimation(google.maps.Animation.BOUNCE);
-    }
-  });
-  var csueb = new google.maps.Marker({
-    position: {lat: 37.656238, lng: -122.055397},
-    map: map,
-    title: "California State University, East Bay"
-  });
-  var southland = new google.maps.Marker({
-    position: {lat: 37.652083, lng: -122.101450},
-    map: map,
-    title: "Southland Mall"
-  });
-  var buffaloBills = new google.maps.Marker({
-    position: {lat: 37.673968, lng: -122.081629},
-    map: map,
-    title: "Buffalo Bill's Brewery"
-  });
-  var barberShop = new google.maps.Marker({
-    position: {lat: 37.649258, lng: -122.091980},
-    map: map,
-    title: "Santa Clara Sports Barber Shop"
-  });
-  var miPueblo = new google.maps.Marker({
-    position: {lat: 37.664491, lng: -122.116331},
-    map: map,
-    title: "Mi Pueblo Food Center"
-  });
-  var shoreLine = new google.maps.Marker({
-    position: {lat: 37.623316, lng: -122.137193},
-    map: map,
-    title: "Hayward Shoreline Interpretive Center"
-  });
+
+  var infoWindow = new google.maps.InfoWindow();
+  var bounds = new google.maps.LatLngBounds();
+
+  /* Creates marker with click listener to display infowindow for each location and
+   pushes it to markers array. */
+  for (var i = 0; i < locations.length; i++) {
+    var position = locations[i].position;
+    var title = locations[i].title;
+    var marker = new google.maps.Marker({
+      map: map,
+      position: position,
+      title: title
+    });
+    markers.push(marker);
+    marker.addListener("click", function() {
+      showInfoWindow(this, infoWindow);
+    });
+    bounds.extend(markers[i].position);
+  }
+  map.fitBounds(bounds);
 }
-$(function() {
-  initMap();
-});
 
-var model = {
-  locations: [
-    {title: "Eon Coffee", position: {lat: 37.645400, lng: -122.104821}},
-    {title: "California State University, East Bay", position: {lat: 37.656238, lng: -122.055397}},
-    {title: "Southland Mall", position: {lat: 37.652083, lng: -122.101450}},
-    {title: "Buffalo Bill's Brewery", position: {lat: 37.673968, lng: -122.081629}},
-    {title: "Santa Clara Sports Barber Shop", position: {lat: 37.649258, lng: -122.091980}},
-    {title: "Mi Pueblo Food Center", position: {lat: 37.664491, lng: -122.116331}},
-    {title: "Hayward Shoreline Interpretive Center", position: {lat: 37.623316, lng: -122.137193}}
-  ]
-};
+function showInfoWindow(marker, infowindow) {
+  if (infowindow.marker != marker) {
+    infowindow.marker = marker;
+    // Need to set content for infowindow.
+    infowindow.setContent("<div>" + marker.title + "</div>");
+    infowindow.open(map, marker);
+    // Clears marker property when infowindow is clicked closed.
+    infowindow.addListener("closeclick", function() {
+      infowindow.setMarker = null;
+    });
+  }
+}
 
-var viewModel = {};
+function listViewModel() {
+  var self = this;
+  self.pointsOfInterest = ko.observableArray(locations);
+
+}
 
 // Activate knockout.js
-ko.applyBindings(viewModel);
+ko.applyBindings(new listViewModel());
+
+// Execute initMap() when DOM is ready.
+$(function() {initMap();});

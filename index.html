@@ -12,34 +12,17 @@
     <h1>Neighborhood Map</h1>
     <!-- TODO:
     Filter Locations:
-      * text input field or dropdown menu that filters map markers and list items to locations text input or selection.
+      * Add filter functionality to li's in dropdown menu, must use knockoutjs.
 
     List View:
-      * listview displaying all locations by default.
       * displays filtered results when filter is applied.
-      * clicking location in list displays info about location (third-party API's, StreetView, Wikipedia, etc.) and animates map marker.-->
-    <div class="dropdown">
-      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        Dropdown
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li role="separator" class="divider"></li>
-        <li><a href="#">Separated link</a></li>
-      </ul>
+      * clicking location in list displays info about location (third-party API's, StreetView, Wikipedia, etc.) and animates map marker. -->
+    <div>
+
     </div>
-    <div id="locationList" >
-      <ul class="list-unstyled">
-        <li>Eon Coffee</li>
-        <li>California State University, East Bay</li>
-        <li>Southland Mall</li>
-        <li>Buffalo Bill's Brewery</li>
-        <li>Santa Clara Sports Barber Shop</li>
-        <li>Mi Pueblo Food Center</li>
-        <li>Hayward Shoreline Interpretive Center</li>
+    <div>
+      <ul data-bind="foreach: pointsOfInterest">
+        <li><span data-bind="text: title"></span></li>
       </ul>
     </div>
     <div id="map"></div>
@@ -50,9 +33,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Bootstrap Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="main.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxpOqkBZp0R6u66qBWWVGPwRIyEnW6fB4&callback=initMap"
     ></script>
-
+    <script src="main.js"></script>
   </body>
 </html>
