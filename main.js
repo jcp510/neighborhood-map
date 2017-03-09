@@ -1,14 +1,14 @@
 var map;
 var markers = [];
 var locations = [
-  {title: "Eon Coffee", category: "dining", position: {lat: 37.645400, lng: -122.104821}},
-  {title: "California State University, East Bay", category: "education", position: {lat: 37.656238, lng: -122.055397}},
-  {title: "Southland Mall", category: "shopping", position: {lat: 37.652083, lng: -122.101450}},
-  {title: "Buffalo Bill's Brewery", category: "dining", position: {lat: 37.673968, lng: -122.081629}},
-  {title: "Chabot College", category: "education", position: {lat: 37.642477, lng: -122.106537}},
-  {title: "Fairfield Inn & Suites", category: "lodging", position: {lat: 37.633226, lng: -122.112062}},
-  {title: "Hayward Shoreline Interpretive Center", category: "leisure", position: {lat: 37.623327, lng: -122.137156}},
-  {title: "Century at Hayward", category: "leisure", position: {lat: 37.673543, lng: -122.080705}}
+  {title: "Eon Coffee", category: "Dining", position: {lat: 37.645400, lng: -122.104821}},
+  {title: "California State University, East Bay", category: "Education", position: {lat: 37.656238, lng: -122.055397}},
+  {title: "Southland Mall", category: "Shopping", position: {lat: 37.652083, lng: -122.101450}},
+  {title: "Buffalo Bill's Brewery", category: "Dining", position: {lat: 37.673968, lng: -122.081629}},
+  {title: "Chabot College", category: "Education", position: {lat: 37.642477, lng: -122.106537}},
+  {title: "Fairfield Inn & Suites", category: "Lodging", position: {lat: 37.633226, lng: -122.112062}},
+  {title: "Hayward Shoreline Interpretive Center", category: "Leisure", position: {lat: 37.623327, lng: -122.137156}},
+  {title: "Century at Hayward", category: "Leisure", position: {lat: 37.673543, lng: -122.080705}}
 ];
 
 function initMap() {
@@ -55,6 +55,13 @@ function showInfoWindow(marker, infowindow) {
 function listViewModel() {
   var self = this;
   self.pointsOfInterest = ko.observableArray(locations);
+  self.categories = ko.observableArray(["Dining", "Education", "Leisure", "Lodging", "Shopping"]);
+  /* Selecting an <option>, other than optionsCaption, should filter/hide each <li> whose category
+  property does not match selected <option>, as well as its associated map marker. */
+
+  /* Selecting optionsCaption should display all <li>'s and associated map markers. */
+
+  /* add click binding to each <option>. */
 
 }
 
@@ -62,4 +69,4 @@ function listViewModel() {
 ko.applyBindings(new listViewModel());
 
 // Execute initMap() when DOM is ready.
-$(function() {initMap();});
+$(function() {initMap()});

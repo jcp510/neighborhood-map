@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <!-- Bootstrap Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <title>Neighborhood Map</title>
   </head>
   <body>
@@ -18,21 +16,21 @@
       * displays filtered results when filter is applied.
       * clicking location in list displays info about location (third-party API's, StreetView, Wikipedia, etc.) and animates map marker. -->
     <div>
-
+      <select data-bind="options: categories, optionsCaption: 'Points of Interest'"></select>
     </div>
+
     <div>
       <ul data-bind="foreach: pointsOfInterest">
         <li><span data-bind="text: title"></span></li>
       </ul>
     </div>
+
     <div id="map"></div>
 
     <!-- knockoutjs-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
-    <!-- jQuery required by Bootstrap -->
+    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- Bootstrap Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxpOqkBZp0R6u66qBWWVGPwRIyEnW6fB4&callback=initMap"
     ></script>
     <script src="main.js"></script>

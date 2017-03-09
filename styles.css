@@ -14,3 +14,10 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+select {
+  -webkit-appearance: menulist-button;
+  -moz-appearance: menulist-button;
+  -ms-appearance: menulist-button;
+  appearance: menulist-button;
+}
