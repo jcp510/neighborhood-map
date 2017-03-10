@@ -8,20 +8,18 @@
   </head>
   <body>
     <h1>Neighborhood Map</h1>
-    <!-- TODO:
-    Filter Locations:
-      * Add filter functionality to li's in dropdown menu, must use knockoutjs.
+    <!-- Selecting an <option> from the <select> menu, other than optionsCaption, should filter/hide
+    each <li> in the <ul> whose category property does not match the selected <option>, as well as its
+    associated map marker.-->
 
-    List View:
-      * displays filtered results when filter is applied.
-      * clicking location in list displays info about location (third-party API's, StreetView, Wikipedia, etc.) and animates map marker. -->
+    <!-- Selecting optionsCaption should display all <li>'s and associated map markers.-->
     <div>
-      <select data-bind="options: categories, optionsCaption: 'Points of Interest'"></select>
+      <select id="selLocCat" data-bind="options: categories, optionsCaption: 'Points of Interest'"></select>
     </div>
 
     <div>
       <ul data-bind="foreach: pointsOfInterest">
-        <li><span data-bind="text: title"></span></li>
+        <li><span data-bind="text: title, visible: $root.locationFilter"></span></li>
       </ul>
     </div>
 

@@ -53,20 +53,26 @@ function showInfoWindow(marker, infowindow) {
 }
 
 function listViewModel() {
-  var self = this;
-  self.pointsOfInterest = ko.observableArray(locations);
-  self.categories = ko.observableArray(["Dining", "Education", "Leisure", "Lodging", "Shopping"]);
-  /* Selecting an <option>, other than optionsCaption, should filter/hide each <li> whose category
-  property does not match selected <option>, as well as its associated map marker. */
+  /* Selecting an <option> from the <select> menu, other than optionsCaption, should filter/hide
+  each <li> in the <ul> whose category property does not match the selected <option>, as well as its
+  associated map marker. */
 
   /* Selecting optionsCaption should display all <li>'s and associated map markers. */
 
-  /* add click binding to each <option>. */
-
+  /* I am observing peculiar behavior in the console: it seems if I refresh the page two or three
+  consecutive times, the console throws an error.  If I refresh once more, the console shows no error.*/
+  var self = this;
+  self.selectedOption = ko.observable($("#selLocCat option:selected").text());
+  self.pointsOfInterest = ko.observableArray(locations);
+  self.categories = ko.observableArray(["Dining", "Education", "Leisure", "Lodging", "Shopping"]);
+  self.locationFilter = ko.computed(function() {
+    self.selectedOption() === "Points of Interest" ? true :
+    self.pointsOfInterest().category === self.selectedOption() ? true : false;
+  });
 }
 
 // Activate knockout.js
 ko.applyBindings(new listViewModel());
 
 // Execute initMap() when DOM is ready.
-$(function() {initMap()});
+$(function() {initMap();});
