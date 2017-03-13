@@ -14,12 +14,12 @@
 
     <!-- Selecting optionsCaption should display all <li>'s and associated map markers.-->
     <div>
-      <select id="selLocCat" data-bind="options: categories, optionsCaption: 'Points of Interest'"></select>
+      <select data-bind="options: categories, value: selectedCategory, optionsCaption: 'Points of Interest'"></select>
     </div>
 
     <div>
       <ul data-bind="foreach: pointsOfInterest">
-        <li><span data-bind="text: title, visible: $root.locationFilter"></span></li>
+        <li><span data-bind="text: title, visible: visible"></span></li>
       </ul>
     </div>
 
@@ -29,8 +29,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="main.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxpOqkBZp0R6u66qBWWVGPwRIyEnW6fB4&callback=initMap"
     ></script>
-    <script src="main.js"></script>
   </body>
 </html>

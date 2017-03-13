@@ -1,14 +1,14 @@
 var map;
 var markers = [];
 var locations = [
-  {title: "Eon Coffee", category: "Dining", position: {lat: 37.645400, lng: -122.104821}},
-  {title: "California State University, East Bay", category: "Education", position: {lat: 37.656238, lng: -122.055397}},
-  {title: "Southland Mall", category: "Shopping", position: {lat: 37.652083, lng: -122.101450}},
-  {title: "Buffalo Bill's Brewery", category: "Dining", position: {lat: 37.673968, lng: -122.081629}},
-  {title: "Chabot College", category: "Education", position: {lat: 37.642477, lng: -122.106537}},
-  {title: "Fairfield Inn & Suites", category: "Lodging", position: {lat: 37.633226, lng: -122.112062}},
-  {title: "Hayward Shoreline Interpretive Center", category: "Leisure", position: {lat: 37.623327, lng: -122.137156}},
-  {title: "Century at Hayward", category: "Leisure", position: {lat: 37.673543, lng: -122.080705}}
+  {visible: ko.observable(true), title: "Eon Coffee", category: "Dining", position: {lat: 37.645400, lng: -122.104821}},
+  {visible: ko.observable(true), title: "California State University, East Bay", category: "Education", position: {lat: 37.656238, lng: -122.055397}},
+  {visible: ko.observable(true), title: "Southland Mall", category: "Shopping", position: {lat: 37.652083, lng: -122.101450}},
+  {visible: ko.observable(true), title: "Buffalo Bill's Brewery", category: "Dining", position: {lat: 37.673968, lng: -122.081629}},
+  {visible: ko.observable(true), title: "Chabot College", category: "Education", position: {lat: 37.642477, lng: -122.106537}},
+  {visible: ko.observable(true), title: "Fairfield Inn & Suites", category: "Lodging", position: {lat: 37.633226, lng: -122.112062}},
+  {visible: ko.observable(true), title: "Hayward Shoreline Interpretive Center", category: "Leisure", position: {lat: 37.623327, lng: -122.137156}},
+  {visible: ko.observable(true), title: "Century at Hayward", category: "Leisure", position: {lat: 37.673543, lng: -122.080705}}
 ];
 
 function initMap() {
@@ -59,15 +59,20 @@ function listViewModel() {
 
   /* Selecting optionsCaption should display all <li>'s and associated map markers. */
 
-  /* I am observing peculiar behavior in the console: it seems if I refresh the page two or three
-  consecutive times, the console throws an error.  If I refresh once more, the console shows no error.*/
   var self = this;
-  self.selectedOption = ko.observable($("#selLocCat option:selected").text());
+  self.selectedCategory = ko.observable("All");
   self.pointsOfInterest = ko.observableArray(locations);
-  self.categories = ko.observableArray(["Dining", "Education", "Leisure", "Lodging", "Shopping"]);
-  self.locationFilter = ko.computed(function() {
-    self.selectedOption() === "Points of Interest" ? true :
-    self.pointsOfInterest().category === self.selectedOption() ? true : false;
+  self.categories = ko.observableArray(["All", "Dining", "Education", "Leisure", "Lodging", "Shopping"]);
+  self.filterLocations = ko.computed(function() {
+    for (var i = 0; i < self.pointsOfInterest().length; i++) {
+      if (self.selectedCategory() === "All") {
+        self.pointsOfInterest().visible = true;
+      } else if ( self.selectedCategory() === self.pointsOfInterest().category) {
+        self.pointsOfInterest().visible = true;
+      } else {
+        self.pointsOfInterest().visible = false;
+      }
+    }
   });
 }
 
@@ -75,4 +80,4 @@ function listViewModel() {
 ko.applyBindings(new listViewModel());
 
 // Execute initMap() when DOM is ready.
-$(function() {initMap();});
+$(function() {initMap()});
