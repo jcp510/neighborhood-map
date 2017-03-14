@@ -22,6 +22,10 @@ function initMap() {
 
   /* Creates marker with click listener to display infowindow for each location and
    pushes it to markers array. */
+
+  /* Try to push each marker to its corresponding locations object, rather than to markers. Also,
+  will need to make them observable. */
+
   for (var i = 0; i < locations.length; i++) {
     var position = locations[i].position;
     var title = locations[i].title;
@@ -57,7 +61,7 @@ function listViewModel() {
   each <li> in the <ul> whose category property does not match the selected <option>, as well as its
   associated map marker. */
 
-  /* Selecting optionsCaption should display all <li>'s and associated map markers. */
+  /* Selecting "All" should display all <li>'s and associated map markers. */
 
   var self = this;
   self.selectedCategory = ko.observable("All");
@@ -66,11 +70,11 @@ function listViewModel() {
   self.filterLocations = ko.computed(function() {
     for (var i = 0; i < self.pointsOfInterest().length; i++) {
       if (self.selectedCategory() === "All") {
-        self.pointsOfInterest().visible = true;
-      } else if ( self.selectedCategory() === self.pointsOfInterest().category) {
-        self.pointsOfInterest().visible = true;
+        self.pointsOfInterest()[i].visible(true);
+      } else if (self.selectedCategory() === self.pointsOfInterest()[i].category) {
+        self.pointsOfInterest()[i].visible(true);
       } else {
-        self.pointsOfInterest().visible = false;
+        self.pointsOfInterest()[i].visible(false);
       }
     }
   });
