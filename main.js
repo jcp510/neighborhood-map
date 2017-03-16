@@ -1,5 +1,4 @@
 var map;
-var markers = [];
 var locations = [
   {visible: ko.observable(true), title: "Eon Coffee", category: "Dining", position: {lat: 37.645400, lng: -122.104821}},
   {visible: ko.observable(true), title: "California State University, East Bay", category: "Education", position: {lat: 37.656238, lng: -122.055397}},
@@ -20,25 +19,22 @@ function initMap() {
   var infoWindow = new google.maps.InfoWindow();
   var bounds = new google.maps.LatLngBounds();
 
-  /* Creates marker with click listener to display infowindow for each location and
-   pushes it to markers array. */
-
-  /* Try to push each marker to its corresponding locations object, rather than to markers. Also,
-  will need to make them observable. */
-
+  /* Creates marker with click listener to display infowindow for each location. */
   for (var i = 0; i < locations.length; i++) {
     var position = locations[i].position;
     var title = locations[i].title;
     var marker = new google.maps.Marker({
       map: map,
       position: position,
-      title: title
+      title: title,
+      visible: true
     });
-    markers.push(marker);
+    // Adds marker property to corresponding location object in locations array.
+    locations[i].marker = marker;
     marker.addListener("click", function() {
       showInfoWindow(this, infoWindow);
     });
-    bounds.extend(markers[i].position);
+    bounds.extend(locations[i].position);
   }
   map.fitBounds(bounds);
 }
@@ -71,17 +67,24 @@ function listViewModel() {
     for (var i = 0; i < self.pointsOfInterest().length; i++) {
       if (self.selectedCategory() === "All") {
         self.pointsOfInterest()[i].visible(true);
+        // The following line throws Uncaught TypeError: Cannot read property 'setVisible' of undefined.
+        //self.pointsOfInterest()[i].marker.setVisible(true);
       } else if (self.selectedCategory() === self.pointsOfInterest()[i].category) {
         self.pointsOfInterest()[i].visible(true);
+        // The following line throws Uncaught TypeError: Cannot read property 'setVisible' of undefined.
+        // self.pointsOfInterest()[i].marker.setVisible(true);
       } else {
         self.pointsOfInterest()[i].visible(false);
+        // The following line throws Uncaught TypeError: Cannot read property 'setVisible' of undefined.
+        // self.pointsOfInterest()[i].marker.setVisible(false);
       }
     }
   });
 }
 
+// Execute initMap() when DOM is ready.
+$(function() {initMap()});
+
 // Activate knockout.js
 ko.applyBindings(new listViewModel());
 
-// Execute initMap() when DOM is ready.
-$(function() {initMap()});
