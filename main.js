@@ -62,6 +62,8 @@ function listViewModel() {
   var self = this;
   self.selectedCategory = ko.observable("All");
   self.pointsOfInterest = ko.observableArray(locations);
+  // Confirms marker property is present for each object in self.pointsOfInterest.
+  console.log(self.pointsOfInterest());
   self.categories = ko.observableArray(["All", "Dining", "Education", "Leisure", "Lodging", "Shopping"]);
   self.filterLocations = ko.computed(function() {
     for (var i = 0; i < self.pointsOfInterest().length; i++) {
