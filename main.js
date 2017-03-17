@@ -15,10 +15,8 @@ function initMap() {
     center: {lat: 37.645400, lng: -122.104821},
     zoom: 14
   });
-
   var infoWindow = new google.maps.InfoWindow();
   var bounds = new google.maps.LatLngBounds();
-
   /* Creates marker with click listener to display infowindow for each location. */
   for (var i = 0; i < locations.length; i++) {
     var position = locations[i].position;
@@ -37,6 +35,8 @@ function initMap() {
     bounds.extend(locations[i].position);
   }
   map.fitBounds(bounds);
+  // Activate knockout.js
+  ko.applyBindings(new listViewModel());
 }
 
 function showInfoWindow(marker, infowindow) {
@@ -56,37 +56,25 @@ function listViewModel() {
   /* Selecting an <option> from the <select> menu, other than optionsCaption, should filter/hide
   each <li> in the <ul> whose category property does not match the selected <option>, as well as its
   associated map marker. */
-
   /* Selecting "All" should display all <li>'s and associated map markers. */
-
   var self = this;
   self.selectedCategory = ko.observable("All");
   self.pointsOfInterest = ko.observableArray(locations);
-  // Confirms marker property is present for each object in self.pointsOfInterest.
-  console.log(self.pointsOfInterest());
   self.categories = ko.observableArray(["All", "Dining", "Education", "Leisure", "Lodging", "Shopping"]);
   self.filterLocations = ko.computed(function() {
     for (var i = 0; i < self.pointsOfInterest().length; i++) {
       if (self.selectedCategory() === "All") {
         self.pointsOfInterest()[i].visible(true);
-        // The following line throws Uncaught TypeError: Cannot read property 'setVisible' of undefined.
-        //self.pointsOfInterest()[i].marker.setVisible(true);
+        self.pointsOfInterest()[i].marker.setVisible(true);
       } else if (self.selectedCategory() === self.pointsOfInterest()[i].category) {
         self.pointsOfInterest()[i].visible(true);
-        // The following line throws Uncaught TypeError: Cannot read property 'setVisible' of undefined.
-        // self.pointsOfInterest()[i].marker.setVisible(true);
+        self.pointsOfInterest()[i].marker.setVisible(true);
       } else {
         self.pointsOfInterest()[i].visible(false);
-        // The following line throws Uncaught TypeError: Cannot read property 'setVisible' of undefined.
-        // self.pointsOfInterest()[i].marker.setVisible(false);
+        self.pointsOfInterest()[i].marker.setVisible(false);
       }
     }
   });
 }
 
-// Execute initMap() when DOM is ready.
-$(function() {initMap()});
-
-// Activate knockout.js
-ko.applyBindings(new listViewModel());
 

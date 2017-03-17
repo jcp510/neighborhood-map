@@ -17,6 +17,7 @@
       <select data-bind="options: categories, value: selectedCategory, optionsCaption: 'Points of Interest'"></select>
     </div>
 
+    <!--Clicking a location on the list displays unique information about the location, and animates its associated map marker -->
     <div>
       <ul data-bind="foreach: pointsOfInterest">
         <li><span data-bind="text: title, visible: visible"></span></li>
