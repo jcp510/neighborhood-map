@@ -25,11 +25,12 @@ function initMap() {
       map: map,
       position: position,
       title: title,
-      visible: true
+      visible: true,
     });
     // Adds marker property to corresponding location object in locations array.
     locations[i].marker = marker;
     marker.addListener("click", function() {
+      bounceMarker(this);
       showInfoWindow(this, infoWindow);
     });
     bounds.extend(locations[i].position);
@@ -37,6 +38,16 @@ function initMap() {
   map.fitBounds(bounds);
   // Activate knockout.js
   ko.applyBindings(new listViewModel());
+}
+/* When a marker or a location in the list view is clicked, corresponding marker should bounce. When
+clicked again, marker should stop bouncing. If a different marker or location in the list view is
+clicked, any currently bouncing marker should stop bouncing, and appropriate marker should bounce. */
+function bounceMarker(marker) {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
 }
 
 function showInfoWindow(marker, infowindow) {

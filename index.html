@@ -18,9 +18,12 @@
     </div>
 
     <!--Clicking a location on the list displays unique information about the location, and animates its associated map marker -->
+    <!-- Information can be provided in the marker’s infoWindow -->
+    <!-- Application utilizes at least one non-Google third-party API -->
+    <!-- All data requests are retrieved in an asynchronous manner. -->
     <div>
       <ul data-bind="foreach: pointsOfInterest">
-        <li><span data-bind="text: title, visible: visible"></span></li>
+        <li data-bind="visible: visible"><span data-bind="text: title"></span></li>
       </ul>
     </div>
 
