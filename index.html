@@ -23,7 +23,8 @@
     <!-- All data requests are retrieved in an asynchronous manner. -->
     <div>
       <ul data-bind="foreach: pointsOfInterest">
-        <li data-bind="visible: visible"><span data-bind="text: title"></span></li>
+        <!-- I think I need to make infoWindow a property of each locations object, and therefore a property of each pointsOfInterest object as well. Maybe I can also combine bounceMarker and showInfoWindow into one function. May need to make infoWindow global. -->
+        <li data-bind="visible: visible, click: bounceMarker(marker)"><span data-bind="text: title"></span></li>
       </ul>
     </div>
 
