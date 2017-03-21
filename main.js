@@ -10,6 +10,7 @@ var locations = [
   {visible: ko.observable(true), title: "Century at Hayward", category: "Leisure", position: {lat: 37.673543, lng: -122.080705}}
 ];
 
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 37.645400, lng: -122.104821},
@@ -29,10 +30,16 @@ function initMap() {
     });
     // Adds marker property to corresponding location object in locations array.
     locations[i].marker = marker;
+    // Adds infoWindow property to corresponding location object in locations array.
+    locations[i].infoWindow = infoWindow;
     marker.addListener("click", function() {
       bounceMarker(this);
       showInfoWindow(this, infoWindow);
     });
+    locations[i].showAndTell = function() {
+      bounceMarker(this.marker);
+      showInfoWindow(this.marker, this.infoWindow);
+    };
     bounds.extend(locations[i].position);
   }
   map.fitBounds(bounds);
@@ -40,8 +47,8 @@ function initMap() {
   ko.applyBindings(new listViewModel());
 }
 /* When a marker or a location in the list view is clicked, corresponding marker should bounce. When
-clicked again, marker should stop bouncing. If a different marker or location in the list view is
-clicked, any currently bouncing marker should stop bouncing, and appropriate marker should bounce. */
+clicked again, marker should stop bouncing. */
+
 function bounceMarker(marker) {
   if (marker.getAnimation() !== null) {
     marker.setAnimation(null);
@@ -64,13 +71,18 @@ function showInfoWindow(marker, infowindow) {
 }
 
 function listViewModel() {
-  /* Selecting an <option> from the <select> menu, other than optionsCaption, should filter/hide
-  each <li> in the <ul> whose category property does not match the selected <option>, as well as its
-  associated map marker. */
-  /* Selecting "All" should display all <li>'s and associated map markers. */
+
+  /* Clicking each <li> should animate corresponding marker and display corresponding infowindow.
+  I need to build a handler for the click binding applied to the <li>'s.
+  The handler must be built in listViewModel.  Anywhere else will cause console to throw error.
+  Optimally, the handler would be a property in each pointsOfInterest object.
+  Does the handler need to be observable?
+  */
+
   var self = this;
   self.selectedCategory = ko.observable("All");
   self.pointsOfInterest = ko.observableArray(locations);
+  console.log(self.pointsOfInterest());
   self.categories = ko.observableArray(["All", "Dining", "Education", "Leisure", "Lodging", "Shopping"]);
   self.filterLocations = ko.computed(function() {
     for (var i = 0; i < self.pointsOfInterest().length; i++) {
@@ -86,6 +98,11 @@ function listViewModel() {
       }
     }
   });
+
+  for (var i = 0; i < self.pointsOfInterest().length; i++) {
+    /*  */
+
+  }
 }
 
 

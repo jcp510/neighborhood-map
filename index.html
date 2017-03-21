@@ -23,8 +23,10 @@
     <!-- All data requests are retrieved in an asynchronous manner. -->
     <div>
       <ul data-bind="foreach: pointsOfInterest">
-        <!-- I think I need to make infoWindow a property of each locations object, and therefore a property of each pointsOfInterest object as well. Maybe I can also combine bounceMarker and showInfoWindow into one function. May need to make infoWindow global. -->
-        <li data-bind="visible: visible, click: bounceMarker(marker)"><span data-bind="text: title"></span></li>
+        <!-- I have to make infoWindow a property of each locations object, and by extension, each pointsOfInterest object, then define click handler in listViewModel, because to infoWindow is essentially a google maps method. So invoking infoWindow in any place other than initMap or listViewModel will throw an error, because google is defined in  -->
+        <li data-bind="visible: visible, click: showAndTell">
+          <span data-bind="text: title"></span>
+        </li>
       </ul>
     </div>
 
