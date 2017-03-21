@@ -10,7 +10,6 @@ var locations = [
   {visible: ko.observable(true), title: "Century at Hayward", category: "Leisure", position: {lat: 37.673543, lng: -122.080705}}
 ];
 
-
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 37.645400, lng: -122.104821},
@@ -18,7 +17,7 @@ function initMap() {
   });
   var infoWindow = new google.maps.InfoWindow();
   var bounds = new google.maps.LatLngBounds();
-  /* Creates marker with click listener to display infowindow for each location. */
+  /* Creates map marker for each location. */
   for (var i = 0; i < locations.length; i++) {
     var position = locations[i].position;
     var title = locations[i].title;
@@ -28,14 +27,17 @@ function initMap() {
       title: title,
       visible: true,
     });
-    // Adds marker property to corresponding location object in locations array.
     locations[i].marker = marker;
-    // Adds infoWindow property to corresponding location object in locations array.
     locations[i].infoWindow = infoWindow;
+    /* Adds click listener to map markers. On click, marker animates and infowindow displays. */
+    /* Currently, marker animation is not triggering until marker is clicked at least twice. */
     marker.addListener("click", function() {
       bounceMarker(this);
       showInfoWindow(this, infoWindow);
     });
+    /* Defines event handler for click binding in list view <li>'s.  On click, associated map marker
+    animates and infowindow displays.  */
+    /* Currently, marker animation is not triggering until <li> is clicked at least twice. */
     locations[i].showAndTell = function() {
       bounceMarker(this.marker);
       showInfoWindow(this.marker, this.infoWindow);
@@ -46,9 +48,7 @@ function initMap() {
   // Activate knockout.js
   ko.applyBindings(new listViewModel());
 }
-/* When a marker or a location in the list view is clicked, corresponding marker should bounce. When
-clicked again, marker should stop bouncing. */
-
+// Sets bounce animation for map markers.
 function bounceMarker(marker) {
   if (marker.getAnimation() !== null) {
     marker.setAnimation(null);
@@ -71,14 +71,6 @@ function showInfoWindow(marker, infowindow) {
 }
 
 function listViewModel() {
-
-  /* Clicking each <li> should animate corresponding marker and display corresponding infowindow.
-  I need to build a handler for the click binding applied to the <li>'s.
-  The handler must be built in listViewModel.  Anywhere else will cause console to throw error.
-  Optimally, the handler would be a property in each pointsOfInterest object.
-  Does the handler need to be observable?
-  */
-
   var self = this;
   self.selectedCategory = ko.observable("All");
   self.pointsOfInterest = ko.observableArray(locations);
@@ -98,11 +90,6 @@ function listViewModel() {
       }
     }
   });
-
-  for (var i = 0; i < self.pointsOfInterest().length; i++) {
-    /*  */
-
-  }
 }
 
 
