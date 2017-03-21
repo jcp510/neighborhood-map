@@ -26,18 +26,17 @@ function initMap() {
       position: position,
       title: title,
       visible: true,
+      animation: null
     });
     locations[i].marker = marker;
     locations[i].infoWindow = infoWindow;
     /* Adds click listener to map markers. On click, marker animates and infowindow displays. */
-    /* Currently, marker animation is not triggering until marker is clicked at least twice. */
     marker.addListener("click", function() {
       bounceMarker(this);
       showInfoWindow(this, infoWindow);
     });
     /* Defines event handler for click binding in list view <li>'s.  On click, associated map marker
     animates and infowindow displays.  */
-    /* Currently, marker animation is not triggering until <li> is clicked at least twice. */
     locations[i].showAndTell = function() {
       bounceMarker(this.marker);
       showInfoWindow(this.marker, this.infoWindow);
@@ -60,7 +59,7 @@ function bounceMarker(marker) {
 function showInfoWindow(marker, infowindow) {
   if (infowindow.marker != marker) {
     infowindow.marker = marker;
-    // Need to set content for infowindow.
+    // Need to add 3rd party API content to infowindow.
     infowindow.setContent("<div>" + marker.title + "</div>");
     infowindow.open(map, marker);
     // Clears marker property when infowindow is clicked closed.
