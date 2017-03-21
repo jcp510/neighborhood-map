@@ -49,11 +49,10 @@ function initMap() {
 }
 // Sets bounce animation for map markers.
 function bounceMarker(marker) {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
+  for (var i = 0; i < locations.length; i++) {
+    locations[i].marker.setAnimation(google.maps.Animation.NULL);
   }
+  marker.setAnimation(google.maps.Animation.BOUNCE);
 }
 
 function showInfoWindow(marker, infowindow) {
@@ -73,7 +72,6 @@ function listViewModel() {
   var self = this;
   self.selectedCategory = ko.observable("All");
   self.pointsOfInterest = ko.observableArray(locations);
-  console.log(self.pointsOfInterest());
   self.categories = ko.observableArray(["All", "Dining", "Education", "Leisure", "Lodging", "Shopping"]);
   self.filterLocations = ko.computed(function() {
     for (var i = 0; i < self.pointsOfInterest().length; i++) {
