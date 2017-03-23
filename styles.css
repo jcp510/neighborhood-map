@@ -1,3 +1,4 @@
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -19,5 +20,4 @@ select {
   -webkit-appearance: menulist-button;
   -moz-appearance: menulist-button;
   -ms-appearance: menulist-button;
-  appearance: menulist-button;
 }
