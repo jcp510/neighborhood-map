@@ -8,30 +8,17 @@
   </head>
   <body>
     <h1>Neighborhood Map</h1>
-    <!-- Selecting an <option> from the <select> menu, other than optionsCaption, should filter/hide
-    each <li> in the <ul> whose category property does not match the selected <option>, as well as its
-    associated map marker.-->
-
-    <!-- Selecting optionsCaption should display all <li>'s and associated map markers.-->
     <div>
       <select data-bind="options: categories, value: selectedCategory, optionsCaption: 'Points of Interest'"></select>
     </div>
-
-    <!--Clicking a location on the list displays unique information about the location, and animates its associated map marker -->
-    <!-- Information can be provided in the marker’s infoWindow -->
-    <!-- Application utilizes at least one non-Google third-party API -->
-    <!-- All data requests are retrieved in an asynchronous manner. -->
     <div>
       <ul data-bind="foreach: pointsOfInterest">
-        <!-- I have to make infoWindow a property of each locations object, and by extension, each pointsOfInterest object, then define click handler in listViewModel, because to infoWindow is essentially a google maps method. So invoking infoWindow in any place other than initMap or listViewModel will throw an error, because google is defined in  -->
         <li data-bind="visible: visible, click: showAndTell">
           <span data-bind="text: title"></span>
         </li>
       </ul>
     </div>
-
     <div id="map"></div>
-
     <!-- knockoutjs-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
     <!-- jQuery -->

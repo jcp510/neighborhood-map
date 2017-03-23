@@ -1,3 +1,8 @@
+/* To do: Use foursquare API to provide data about each location in its respective infowindow,
+all data requests are asynchronous, provide attribution for API in UI and README.
+Make README file detailing all steps required to successfully run the application.
+Provide for error handling i.e., AJAX error or fail methods.
+*/
 var map;
 var locations = [
   {visible: ko.observable(true), title: "Eon Coffee", category: "Dining", position: {lat: 37.645400, lng: -122.104821}},
