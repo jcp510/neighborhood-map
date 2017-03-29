@@ -1,5 +1,3 @@
-/* To do: Provide for error handling i.e., AJAX error or fail methods. */
-
 var map;
 var locations = [
   {visible: ko.observable(true), title: "Eon Coffee", category: "Dining", foursqVenId: "4a870099f964a5200f0220e3", position: {lat: 37.645400, lng: -122.104821}},
@@ -80,7 +78,7 @@ function showInfoWindow(marker, infowindow) {
       infowindow.open(map, marker);
     // Error handler.
     }).fail(function(xhr, status, errorThrown) {
-      alert("Sorry, we encountered an error somewhere.");
+      alert("Sorry, we encountered an error getting data.");
       console.log("Error: " + errorThrown);
       console.log("Status: " + status);
       console.dir(xhr);
@@ -90,6 +88,10 @@ function showInfoWindow(marker, infowindow) {
       infowindow.setMarker = null;
     });
   }
+}
+
+function mapErrorHandler() {
+  alert("Sorry, we encountered an error loading the map.");
 }
 
 function listViewModel() {
